@@ -8,7 +8,7 @@ const api = `https://sheets.googleapis.com/v4/spreadsheets/${
   process.env.REACT_APP_GOOGLE_API_KEY
 }`;
 
-interface Paragraph {
+export interface Paragraph {
   id: string;
   chapter: string;
   paragraph: string;
