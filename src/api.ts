@@ -2,11 +2,7 @@ import { get } from "lodash";
 
 const RANGES = "Оглавление";
 
-const api = `https://sheets.googleapis.com/v4/spreadsheets/${
-  process.env.REACT_APP_SPREADSHEET_ID
-}/values:batchGet?ranges=${RANGES}&majorDimension=ROWS&key=${
-  process.env.REACT_APP_GOOGLE_API_KEY
-}`;
+const api = `https://sheets.googleapis.com/v4/spreadsheets/${process.env.REACT_APP_SPREADSHEET_ID}/values:batchGet?ranges=${RANGES}&majorDimension=ROWS&key=${process.env.REACT_APP_GOOGLE_API_KEY}`;
 
 export interface Paragraph {
   id: string;
@@ -19,6 +15,7 @@ export interface Paragraph {
 }
 
 const getParagraphs = (data: any): Paragraph[] => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [headings, ...rawParagraphs]: (string[])[] = get(
     data,
     "valueRanges[0].values",

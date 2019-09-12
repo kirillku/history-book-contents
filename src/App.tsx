@@ -14,13 +14,17 @@ interface State {
   paragraphs: Paragraph[];
 }
 
-const App = () => {
+const useData = (): State => {
   const [data, setData] = React.useState<State>({ paragraphs: [] });
   React.useEffect(() => {
     fetchData().then(data => setData(data));
-  });
+  }, []);
 
-  const { paragraphs } = data;
+  return data;
+};
+
+const App = () => {
+  const { paragraphs } = useData();
 
   const byChapters = groupBy(paragraphs, "chapter");
 
@@ -30,15 +34,17 @@ const App = () => {
       <h1>Оглавление</h1>
       <Wrapper>
         {Object.entries(byChapters).map(([chapter, chapterParagraphs]) => (
-          <div>
+          <div key={chapter}>
             <h2>Глава {chapter}</h2>
             <table>
-              {chapterParagraphs.map(paragraph => (
-                <tr>
-                  <td>{paragraph.paragraph}</td>
-                  <td>{paragraph.description}</td>
-                </tr>
-              ))}
+              <tbody>
+                {chapterParagraphs.map(paragraph => (
+                  <tr key={paragraph.id}>
+                    <td>{paragraph.paragraph}</td>
+                    <td>{paragraph.description}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         ))}
